@@ -71,3 +71,4 @@
 /home/guilhermemattos/Documentos/www/dotnetcore/ProAgil/ProAgil.API/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
 /home/guilhermemattos/Documentos/www/dotnetcore/ProAgil/ProAgil.API/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
 /home/guilhermemattos/Documentos/www/dotnetcore/ProAgil/ProAgil.API/obj/Debug/netcoreapp3.1/ProAgil.API.csproj.CopyComplete
+/home/guilhermemattos/Documentos/www/dotnetcore/ProAgil/ProAgil.API/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Design.dll
