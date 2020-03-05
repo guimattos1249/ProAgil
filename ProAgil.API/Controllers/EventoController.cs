@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ProAgil.API.Data;
 using ProAgil.API.Model;
 
 namespace ProAgil.API.Controllers
@@ -12,50 +14,32 @@ namespace ProAgil.API.Controllers
     [Route("[controller]")]
     public class EventoController : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<Evento> Get()
+        public DataContext _context { get; }
+
+        public EventoController(DataContext context)
         {
-            return new Evento [] {
-                new Evento() {
-                    EventoId = 1,
-                    Tema = "Angular e .NetCore",
-                    Lote = "1º Lote",
-                    QtdPessoas = 250,
-                    Local = "Agudos",
-                    DataEvento = DateTime.Now.AddDays(2).ToString("dd/MM/yyyy")
-                },
-                new Evento() {
-                    EventoId = 2,
-                    Tema = "React e Node",
-                    Lote = "2º Lote",
-                    QtdPessoas = 1000,
-                    Local = "Bauru",
-                    DataEvento = DateTime.Now.AddDays(3).ToString("dd/MM/yyyy")
-                }
-            };
+            _context = context;
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            try
+            {
+                var results = _context.Eventos.ToList();
+                return Ok(results);
+            }
+            catch (System.Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de Dados Falhou");
+            }
+
         }
 
         [HttpGet("{id}")]
         public ActionResult<Evento> Get(int id)
         {
-            return new Evento [] {
-                new Evento() {
-                    EventoId = 1,
-                    Tema = "Angular e .NetCore",
-                    Lote = "1º Lote",
-                    QtdPessoas = 250,
-                    Local = "Agudos",
-                    DataEvento = DateTime.Now.AddDays(2).ToString("dd/MM/yyyy")
-                },
-                new Evento() {
-                    EventoId = 2,
-                    Tema = "React e Node",
-                    Lote = "2º Lote",
-                    QtdPessoas = 1000,
-                    Local = "Bauru",
-                    DataEvento = DateTime.Now.AddDays(3).ToString("dd/MM/yyyy")
-                }
-            }.FirstOrDefault(x => x.EventoId == id);
+            return _context.Eventos.FirstOrDefault(x => x.EventoId == id);
         }
     }
 }
