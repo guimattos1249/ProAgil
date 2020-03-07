@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class EventosComponent implements OnInit {
 
+  // tslint:disable-next-line: variable-name
   _filter_list: string;
 
   get filterList() {
