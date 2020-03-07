@@ -46,6 +46,8 @@ namespace ProAgil.API
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseAuthorization();

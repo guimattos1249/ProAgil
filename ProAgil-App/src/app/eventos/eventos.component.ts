@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class EventosComponent implements OnInit {
 
-  eventos: any;
+  eventos: any = [];
 
   constructor(private http: HttpClient) { }
 
@@ -20,6 +20,7 @@ export class EventosComponent implements OnInit {
     this.http.get('http://localhost:5000/evento').subscribe(
       response => {
         this.eventos = response;
+        console.log(response);
       },
       error => {
         console.log(error);
