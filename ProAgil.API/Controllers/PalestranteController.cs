@@ -8,20 +8,21 @@ namespace ProAgil.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class EventoController : ControllerBase
+    public class PalestranteController : ControllerBase
     {
         public IProAgilRepository _repo { get; }
-        public EventoController(IProAgilRepository repo)
+
+        public PalestranteController(IProAgilRepository repo)
         {
             _repo = repo;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(string nome)
         {
             try
             {
-                var results = await _repo.GetAllEventoAsync(true);
+                var results = await _repo.GetAllPalestranteAsyncByName(nome, true);
 
                 return Ok(results);
             }
@@ -31,27 +32,12 @@ namespace ProAgil.API.Controllers
             }
         }
 
-        [HttpGet("{EventoId}")]
-        public async Task<IActionResult> Get(int EventoId)
+        [HttpGet("{PalestranteId}")]
+        public async Task<IActionResult> Get(int PalestranteId)
         {
             try
             {
-                var results = await _repo.GetEventoAsyncById(EventoId, true);
-
-                return Ok(results);
-            }
-            catch (System.Exception)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de Dados Falhou");
-            }
-        }
-
-        [HttpGet("getByTema/{tema}")]
-        public async Task<IActionResult> Get(string tema)
-        {
-            try
-            {
-                var results = await _repo.GetAllEventoAsyncByTema(tema, true);
+                var results = await _repo.GetEventoAsyncById(PalestranteId, true);
 
                 return Ok(results);
             }
@@ -62,7 +48,7 @@ namespace ProAgil.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Evento model)
+        public async Task<IActionResult> Post(Palestrante model)
         {
             try
             {
@@ -70,7 +56,7 @@ namespace ProAgil.API.Controllers
 
                 if(await _repo.SaveChangesAsync())
                 {
-                    return Created($"evento/{model.Id}", model);
+                    return Created($"palestrante/{model.Id}", model);
                 }
             }
             catch (System.Exception)
@@ -82,12 +68,12 @@ namespace ProAgil.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(int EventoId, Evento model)
+        public async Task<IActionResult> Put(int PalestranteId, Palestrante model)
         {
             try
             {
-                var evento = await _repo.GetEventoAsyncById(EventoId, false);
-                if(evento == null) return NotFound();
+                var palestrante = await _repo.GetPalestranteAsyncById(PalestranteId, false);
+                if(palestrante == null) return NotFound();
 
                 _repo.Update(model);
 
@@ -105,14 +91,14 @@ namespace ProAgil.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int EventoId)
+        public async Task<IActionResult> Delete(int PalestranteId)
         {
             try
             {
-                var evento = await _repo.GetEventoAsyncById(EventoId, false);
-                if(evento == null) return NotFound();
+                var palestrante = await _repo.GetEventoAsyncById(PalestranteId, false);
+                if(palestrante == null) return NotFound();
 
-                _repo.Delete(evento);
+                _repo.Delete(palestrante);
 
                 if(await _repo.SaveChangesAsync())
                 {
