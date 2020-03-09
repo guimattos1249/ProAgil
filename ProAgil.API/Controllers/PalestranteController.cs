@@ -37,7 +37,7 @@ namespace ProAgil.API.Controllers
         {
             try
             {
-                var results = await _repo.GetEventoAsyncById(PalestranteId, true);
+                var results = await _repo.GetPalestranteAsyncById(PalestranteId, true);
 
                 return Ok(results);
             }
